@@ -11,8 +11,8 @@ local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm"
 config.use_fancy_tab_bar = false
 --config.enable_tab_bar = false
 config.font_size = 10
-config.color_scheme = 'Everforest Dark (Gogh)' 
-config.window_decorations = 'RESIZE' 
+config.color_scheme = 'Everforest Dark (Gogh)'
+config.window_decorations = 'RESIZE'
 config.window_padding = {
   left = 5,
   right = 5,
@@ -20,13 +20,6 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.ssh_domains = {
-  {
-    name = 'raspberrypi',
-    remote_address = '192.168.178.115',
-    username = 'niko',
-  },
-}
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 }
 config.keys = {
   -- splitting
