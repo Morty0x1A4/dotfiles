@@ -88,5 +88,6 @@ config.colors = {
 config.inactive_pane_hsb = {
 	brightness = 0.75,
 }
+config.warn_about_missing_glyphs = false
 bar.apply_to_config(config)
 return config
