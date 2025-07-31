@@ -5,6 +5,7 @@ local servers = {
 	"clangd",
 	"pyright",
 	"bashls",
+	"ts_ls",
 }
 vim.lsp.enable(servers)
 
