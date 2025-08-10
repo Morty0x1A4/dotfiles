@@ -309,12 +309,27 @@ require("lazy").setup({
 				-- You can put your default mappings / updates / etc. in here
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
-				-- defaults = {
-				--   mappings = {
-				--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-				--   },
-				-- },
-				-- pickers = {}
+        defaults = {
+          file_ignore_patterns = {
+            -- others,
+            '.godot', 'server.pipe', '.uid'
+          },
+        },
+        pickers = {
+          live_grep = {
+            additional_args = function()
+              return {
+                '--hidden',
+                '--no-ignore',
+                -- others,
+                '-g',
+                '!.godot', -- <- Godot related
+                '-g',
+                '!.uid',  -- <- Godot related
+              }
+            end,
+          },
+        },
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -384,7 +399,22 @@ require("lazy").setup({
 			-- Automatically install LSPs and related tools to stdpath for Neovim
 			-- Mason must be loaded before its dependents so we need to set it up here.
 			-- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-			{ "mason-org/mason.nvim", opts = {} },
+			{
+				"mason-org/mason.nvim",
+				opts = {
+					registries = {
+						"github:mason-org/mason-registry",
+						"github:Crashdummyy/mason-registry",
+					},
+				},
+			},
+			{
+				"seblyng/roslyn.nvim",
+				ft = "cs",
+				---@module 'roslyn.config'
+				---@type RoslynNvimConfig
+				opts = {},
+			},
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -395,35 +425,6 @@ require("lazy").setup({
 			"saghen/blink.cmp",
 		},
 		config = function()
-			-- Brief aside: **What is LSP?**
-			--
-			-- LSP is an initialism you've probably heard, but might not understand what it is.
-			--
-			-- LSP stands for Language Server Protocol. It's a protocol that helps editors
-			-- and language tooling communicate in a standardized fashion.
-			--
-			-- In general, you have a "server" which is some tool built to understand a particular
-			-- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-			-- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-			-- processes that communicate with some "client" - in this case, Neovim!
-			--
-			-- LSP provides Neovim with features like:
-			--  - Go to definition
-			--  - Find references
-			--  - Autocompletion
-			--  - Symbol Search
-			--  - and more!
-			--
-			-- Thus, Language Servers are external tools that must be installed separately from
-			-- Neovim. This is where `mason` and related plugins come into play.
-			--
-			-- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-			-- and elegantly composed help section, `:help lsp-vs-treesitter`
-
-			--  This function gets run when an LSP attaches to a particular buffer.
-			--    That is to say, every time a new file is opened that is associated with
-			--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-			--    function will be executed to configure the current buffer
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
@@ -607,7 +608,18 @@ require("lazy").setup({
 					},
 				},
 			}
+    local lspconfig = require("lspconfig")
 
+    -- GDScript LSP (Godot's built-in language server)
+    lspconfig.gdscript.setup({
+      -- Godot's LSP runs on port 6005 by default
+      cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+      name = "godot",
+      -- Optional: Filetypes to attach to (Godot uses .gd files)
+      filetypes = { "gdscript", "gd" },
+      -- Optional: Root directory detection (Godot project files)
+      root_dir = lspconfig.util.root_pattern("project.godot", ".git"),
+    })
 			-- Ensure the servers and tools above are installed
 			--
 			-- To check the current status of installed tools and/or manually install
@@ -664,7 +676,7 @@ require("lazy").setup({
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
-				local disable_filetypes = { c = true, cpp = true }
+				local disable_filetypes = { c = true, cpp = true, lua = true }
 				if disable_filetypes[vim.bo[bufnr].filetype] then
 					return nil
 				else
@@ -683,6 +695,10 @@ require("lazy").setup({
 				bash = { "shfmt" },
 				sh = { "shfmt" },
 				go = { "gofmt" },
+        csharpier = {
+          command = 'dotnet-csharpier',
+          args = { '--write-stdout' },
+        },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
@@ -872,7 +888,11 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
+        "c_sharp",
 				"diff",
+        "gdscript",
+        "gdshader",
+        "godot_resource",
 				"html",
 				"lua",
 				"luadoc",
@@ -891,7 +911,7 @@ require("lazy").setup({
 				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
 				additional_vim_regex_highlighting = { "ruby" },
 			},
-			indent = { enable = true, disable = { "ruby" } },
+			indent = { enable = true, disable = { "ruby", "lua" } },
 		},
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -900,7 +920,6 @@ require("lazy").setup({
 		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	},
-
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
@@ -921,7 +940,7 @@ require("lazy").setup({
 	--    This is the easiest way to modularize your config.
 	--
 	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	-- { import = 'custom.plugins' },
+	{ import = "custom.plugins" },
 	--
 	-- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
 	-- Or use telescope!

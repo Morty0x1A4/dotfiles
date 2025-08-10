@@ -95,6 +95,10 @@ alias l='ls -CF'
 # Chezmoi alias
 alias cz='chezmoi'
 
+# Godot alias
+alias godot='/home/niko/Godot/Godot_v4.4.1-stable_mono_linux.x86_64'
+alias gnvim='nvim --listen /tmp/godot.pipe'
+
 # XAMPP alias
 alias xampp-start='sudo /opt/lampp/lampp start'
 alias xampp-stop='sudo /opt/lampp/lampp stop'
@@ -127,6 +131,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nv
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH=$PATH:/home/niko/go/bin
+
+export DOTNET_ROOT=/usr/lib/dotnet
+export PATH=$PATH:DOTNET_ROOT
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
