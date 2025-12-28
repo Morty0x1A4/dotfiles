@@ -608,18 +608,6 @@ require("lazy").setup({
 					},
 				},
 			}
-    local lspconfig = require("lspconfig")
-
-    -- GDScript LSP (Godot's built-in language server)
-    lspconfig.gdscript.setup({
-      -- Godot's LSP runs on port 6005 by default
-      cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
-      name = "godot",
-      -- Optional: Filetypes to attach to (Godot uses .gd files)
-      filetypes = { "gdscript", "gd" },
-      -- Optional: Root directory detection (Godot project files)
-      root_dir = lspconfig.util.root_pattern("project.godot", ".git"),
-    })
 			-- Ensure the servers and tools above are installed
 			--
 			-- To check the current status of installed tools and/or manually install
@@ -649,7 +637,7 @@ require("lazy").setup({
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for ts_ls)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
+            require("lspconfig")[server_name].setup(server)
 					end,
 				},
 			})
@@ -812,20 +800,23 @@ require("lazy").setup({
 		-- change the command in the config to whatever the name of that colorscheme is.
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"neanias/everforest-nvim",
-		version = false,
-		lazy = false,
-		priority = 1000, -- make sure to load this before all the other start plugins
-		-- Optional; default configuration will be used if setup isn't called.
-		config = function()
-			---@diagnostic disable-next-line: missing-fields
-			require("everforest").setup({
-				background = "medium",
-				transparent_background_level = 0,
-				italics = true,
-			})
-			vim.cmd.colorscheme("everforest")
-		end,
+  {
+    'olivercederborg/poimandres.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('poimandres').setup {
+        -- leave this setup function empty for default config
+        -- or refer to the configuration section
+        -- for configuration options
+      }
+    end,
+
+    -- optionally set the colorscheme within lazy config
+    init = function()
+      vim.cmd("colorscheme poimandres")
+    end
+    }
 	},
 
 	-- Highlight todo, notes, etc in comments
