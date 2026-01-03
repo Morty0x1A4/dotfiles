@@ -1,0 +1,186 @@
+/* -- Global rules -- */
+* {
+	border: none;
+	font-family: JetbrainsMono Nerd Font, monospace;
+	font-size: 13px;
+	min-height: 16px;
+	margin-top: 1px;
+}
+
+window#waybar {
+	border-top: 3px solid #ffffff;
+	background: none;
+	opacity: 1;
+}
+
+/* Modules left */
+#custom-archicon {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #141414;
+	color: #ffffff;
+	padding-right: 16px;
+	padding-left: 16px;
+	/* border-radius: 20px 0px 0px 20px; */
+}
+
+#window {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: 3px solid #ffffff;
+	border-left: none;
+	background: #141414;
+	color: #ffffff;
+	border-radius: 0px 0px 20px 0px;
+	padding: 0px 10px;
+}
+
+/* Modules center */
+
+#workspaces {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: 3px solid #ffffff;
+	border-left: 3px solid #ffffff;
+	background: #141414;
+	color: #ffffff;
+	border-radius: 0px 0px 20px 20px;
+	padding: 0px 10px;
+}
+
+#workspaces button {
+	padding: 0px 5px;
+	margin: 0px 2px;
+	border-radius: 0px;
+	background: transparent;
+	color: #ffffff;
+	border: none;
+}
+
+#workspaces button.active {
+	background: #ffffff;
+	color: #141414;
+	border-radius: 0px;
+	border: none;
+}
+
+/* Modules right*/
+#tray {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: 3px solid #ffffff;
+	background: #141414;
+	color: #ffffff;
+	padding: 0px 10px 0px 20px;
+	border-radius: 0px 0px 0px 20px;
+}
+
+#pulseaudio {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #141414;
+	color: #ffffff;
+	padding: 0px 10px 0px 10px;
+	border-radius: 0px 0px 0px 0px;
+}
+
+#network {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #141414;
+	padding-right: 14px;
+	padding-left: 12px;
+	font-size: 16px;
+	border-right: none;
+}
+
+#clock {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #141414;
+	color: #ffffff;
+	padding: 0px 10px 0px 10px;
+	border-radius: 0px 0px 0px 0px;
+}
+
+
+#custom-exit {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #141414;
+	color: #ffffff;
+	padding: 0px 20px 0px 10px;
+	/* border-radius: 0px 20px 20px 0px; */
+	margin-right: 2px;
+}
+
+
+#custom-archicon:hover {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #ffffff;
+	color: #141414;
+}
+
+#window:hover {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: 3px solid #ffffff;
+	border-left: none;
+	background: #ffffff;
+	color: #141414;
+	border-radius: 0px 0px 20px 0px;
+	padding: 0px 10px;
+}
+
+#custom-exit:hover {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #ffffff;
+	color: #141414;
+}
+
+#clock:hover {
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	background: #ffffff;
+	color: #141414;
+}
+
+#pulseaudio:hover {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #ffffff;
+	color: #141414;
+}
+
+#network:hover {
+	border-top: none;
+	border-bottom: 3px solid #ffffff;
+	border-right: none;
+	border-left: none;
+	background: #ffffff;
+	color: #141414;
+	padding-right: 14px;
+	padding-left: 12px;
+	font-size: 16px;
+	border-right: none;
+}
