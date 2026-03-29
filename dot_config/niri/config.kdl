@@ -7,7 +7,7 @@
 input {
     keyboard {
         xkb {
-            layout "de" // Use the German keyboard layout
+            layout "en" // Use the German keyboard layout
         }
         numlock // Enable numlock on startup
     }

@@ -1,0 +1,28 @@
+{
+  "chat.agent.enabled": false,
+  "go.toolsManagement.autoUpdate": true,
+  "chat.extensionUnification.enabled": false,
+  "chat.disableAIFeatures": true,
+  "git.enableSmartCommit": true,
+  "workbench.colorTheme": "poimandres",
+  "security.workspace.trust.untrustedFiles": "open",
+  "python.useEnvironmentsExtension": true,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "keyboard.dispatch": "keyCode",
+  "editor.scrollBeyondLastLine": false,
+  "editor.lineNumbers": "relative",
+  "vscode-neovim.compositeKeys": {
+      "jk": {
+          "command": "vscode-neovim.lua",
+          "args": [
+              [
+                  "local code = require('vscode')",
+                  "code.action('vscode-neovim.escape')",
+                  "code.action('workbench.action.files.save')",
+              ],
+          ],
+      },
+  },
+}
